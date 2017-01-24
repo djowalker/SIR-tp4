@@ -1,9 +1,10 @@
 package domain;
 
-import javax.persistence.InheritanceType;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 
-@Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+//@Entity
+//@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class IntelligentDevices {
 
 	

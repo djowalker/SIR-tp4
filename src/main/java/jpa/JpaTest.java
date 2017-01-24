@@ -76,9 +76,12 @@ public class JpaTest {
 			// les listes correspondent à ce qu'on a créé
 			lp.add(af);
 			lp.add(lf);
-			homeList.add(h2);
-			homeList.add(h);
-			Person gf = new Person("Guy","Ferdinand","jeandGuy@mescouilles.Fr",lp,homeList,ed));
+//			homeList.add(h2);
+//			homeList.add(h);
+			ElectronicDevice ed = new ElectronicDevice("TV", "SAMSUNG12", 12);
+			List<ElectronicDevice> edl = new ArrayList<ElectronicDevice>();
+			edl.add(ed);
+			Person gf = new Person("Guy","Ferdinand","jeandGuy@mescouilles.Fr",lp,homeList,edl);
 			manager.persist(gf);
 			manager.persist(lf);
 			manager.persist(af);
