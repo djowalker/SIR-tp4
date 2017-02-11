@@ -26,8 +26,8 @@ public class SampleWebService {
         h1.setConsommationAvg(500);
         Heater h2 = new Heater();
         h2.setConsommationAvg(600);
-        h.addHeater(h1);
-        h.addHeater(h2);
+        h.addDevice(h1);
+        h.addDevice(h2);
         return h;
     }
 

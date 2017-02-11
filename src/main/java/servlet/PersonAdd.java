@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import domain.Person;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,11 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "personinfo", urlPatterns = { "/PersonInfo" })
-public class PersonInfo extends HttpServlet {
+public class PersonAdd extends HttpServlet {
 	
 	public void init() throws ServletException{
-		EntityManager manager = new EntityManager();
-		
+		//EntityManager manager = new EntityManager();
+		if (!EntitySingleton.isBool()){
+			EntitySingleton.setFactory(Persistence.createEntityManagerFactory("example"));
+			EntitySingleton.setManager(EntitySingleton.getFactory().createEntityManager());
+			EntitySingleton.setBool(true);
+		}
 	}
 	
 	public void doPost(HttpServletRequest request,

@@ -109,6 +109,10 @@ public class Home {
 	public void setDevices(List<ElectronicDevice> devices) {
 		this.devices = devices;
 	}
+	
+	public void addDevice(Heater h){
+		heaters.add(h);
+	}
 
 	@Override
 	public String toString() {
