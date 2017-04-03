@@ -1,12 +1,13 @@
 <html>
 	<body>
-		<FORM Method="POST" Action="/UserInfo">
-			id :         <INPUT type=text size=20 name=idPerson><BR>
+		<FORM Method="POST" Action="/PersonAdd">
 			Nom :     <INPUT type=text size=20 name=nomPerson><BR>
+			Prenom :     <INPUT type=text size=20 name=prenomPerson><BR>
 			Mail :         <INPUT type=text size=20 name=mail><BR>
-			Ami :	<input type=text size=20 name=ami><br>
         <INPUT type=submit value=Ajouter>
 		</FORM>
-		<input type=button value=Lister>
-	</body>
+		<FORM Method="GET" Action="/PersonList">
+		<INPUT type=submit value=Lister Action="/PersonList">
+		</FORM>
+		</body>
 </html>

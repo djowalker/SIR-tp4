@@ -39,6 +39,15 @@ public class Person {
 		this.devices = devices;
 	}
 
+	
+
+	public Person(String name, String surname, String mail) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.mail = mail;
+	}
+
 	@ManyToMany
 	public List<Person> getFriend() {
 		return friend;
@@ -48,6 +57,10 @@ public class Person {
 		this.friend = friend;
 	}
 
+	public void addFriend(Person friend){
+		this.friend.add(friend);
+	}
+	
 	@OneToMany
 	public List<Home> getHomes() {
 		return homes;
