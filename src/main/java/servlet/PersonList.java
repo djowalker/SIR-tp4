@@ -31,11 +31,8 @@ public class PersonList extends HttpServlet {
 //		System.out.println("init list");
 //		factory = Persistence.createEntityManagerFactory("example");
 //		manager = factory.createEntityManager();
-		if (!EntitySingleton.isBool()){
-			EntitySingleton.setFactory(Persistence.createEntityManagerFactory("example"));
-			EntitySingleton.setManager(EntitySingleton.getFactory().createEntityManager());
-			EntitySingleton.setBool(true);
-		}
+		EntitySingleton.getInstance();
+
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,6 +77,5 @@ public class PersonList extends HttpServlet {
 		System.out.println("destroy list");
 		super.destroy();
 		EntitySingleton.getManager().close();
-		EntitySingleton.setBool(false);
 	}
 }

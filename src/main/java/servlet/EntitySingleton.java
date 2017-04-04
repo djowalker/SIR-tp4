@@ -2,31 +2,34 @@ package servlet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class EntitySingleton {
-	private static EntityManagerFactory factory;
 	private static EntityManager manager;
-	private static boolean bool;
+	private static EntityManagerFactory factory;
+	private static EntitySingleton single = null;
 	
-	public static EntityManagerFactory getFactory() {
-		return factory;
+	private EntitySingleton(){
+		factory  = Persistence.createEntityManagerFactory("example");
+		manager = factory.createEntityManager();
+		single = this;
 	}
-	public static void setFactory(EntityManagerFactory factory) {
-		EntitySingleton.factory = factory;
+	
+	public static EntitySingleton getInstance() {
+		if(single == null){
+			return new EntitySingleton();
+		}
+		return single;
 	}
+
 	public static EntityManager getManager() {
 		return manager;
 	}
-	public static void setManager(EntityManager manager) {
-		EntitySingleton.manager = manager;
+
+	public static void setFactory(EntityManagerFactory factory) {
+		EntitySingleton.factory = factory;
 	}
-	public static boolean isBool() {
-		return bool;
-	}
-	public static void setBool(boolean bool) {
-		EntitySingleton.bool = bool;
-	}
-	
+
 	
 
 }

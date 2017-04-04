@@ -18,11 +18,7 @@ public class PersonAdd extends HttpServlet {
 
 	public void init() throws ServletException {
 		// EntityManager manager = new EntityManager();
-		if (!EntitySingleton.isBool()) {
-			EntitySingleton.setFactory(Persistence.createEntityManagerFactory("example"));
-			EntitySingleton.setManager(EntitySingleton.getFactory().createEntityManager());
-			EntitySingleton.setBool(true);
-		}
+		EntitySingleton.getInstance();
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,7 +30,6 @@ public class PersonAdd extends HttpServlet {
 				+ " <LI>idPerson: " + request.getParameter("prenomPerson") + "\n" + " <LI>nomPerson: "
 				+ request.getParameter("nomPerson") + "\n" + " <LI>mail: " + request.getParameter("mail") + "\n"
 				+ " <LI>ami: " + request.getParameter("ami") + "\n" + "</UL>\n" +
-
 				"</BODY></HTML>");
 
 		Person added = new Person(request.getParameter("nomPerson"),request.getParameter("prenomPerson"),
