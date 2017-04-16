@@ -6,84 +6,77 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlTransient;
+
+
 
 @Entity
-@Table(name="home")
 public class Home {
 
-	private Long id;
-	private String address;
-	private String Town;
+	private int id;
+	private String adresse;
+	private String ville;
 	private int rooms;
 	private int surface;
-	private List<Heater> heaters = new ArrayList<Heater>();
-	private List<ElectronicDevice> devices = new ArrayList<ElectronicDevice>();
+	private List<IntelligentDevice> devices = new ArrayList<IntelligentDevice>();
+	private List<Person>owners = new ArrayList<Person>();
 	
 	public Home (){
 	}
 
-	public Home(String address, String town) {
-		this.address = address;
-		Town = town;
-	}
-
-	public Home(String address, String town, int rooms, int surface, List<Heater> heaters,
-			List<ElectronicDevice> devices) {
-		this.address = address;
-		Town = town;
-		this.rooms = rooms;
-		this.surface = surface;
-		this.heaters = heaters;
-		this.devices = devices;
-	}
-	
-	public Home(String address, String town, int rooms, int surface) {
-		this.address = address;
-		Town = town;
-		this.rooms = rooms;
-		this.surface = surface;
-	}
-
-
-	public Home(String town) {
-		this.Town = town;
+	public Home(String ad, String vi,int ro,int su) {
+		adresse = ad;
+		ville = vi;
+		rooms = ro;
+		surface = su;
 	}
 
 	@Id
-	@GeneratedValue
-	//@Column(name="HOME_REF_ID")
-	public Long getId() {
+	@GeneratedValue (strategy= GenerationType.AUTO)
+	@Column(name="HOME_ID")
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public String getAddress() {
-		return address;
+	
+	public String getAdresse() {
+		return adresse;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 	
-	public String getTown() {
-		return Town;
+	@Column (name ="ville")
+	public String getVille() {
+		return ville;
 	}
-	public void setTown(String town) {
-		Town = town;
+	public void setVille(String town) {
+		ville = town;
 	}
 	
-	public int getRoom() {
+	@Column (name ="rooms")
+	public int getRooms() {
 		return rooms;
 	}
 
-	public void setRoom(int room) {
+	public void setRooms(int room) {
 		this.rooms = room;
 	}
 
+
+	
+	@Column (name ="surf")
 	public int getSurface() {
 		return surface;
 	}
@@ -92,32 +85,38 @@ public class Home {
 		this.surface = surface;
 	}
 
-	@OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
-	public List<Heater> getHeaters() {
-		return heaters;
-	}
-
-	public void setHeaters(List<Heater> heaters) {
-		this.heaters = heaters;
-	}
-
-	@OneToMany(mappedBy = "home", cascade = CascadeType.PERSIST)
-	public List<ElectronicDevice> getDevices() {
+	@OneToMany(cascade = CascadeType.ALL)
+	public List<IntelligentDevice> getDevices() {
 		return devices;
 	}
 
-	public void setDevices(List<ElectronicDevice> devices) {
+	public void setDevices(List<IntelligentDevice> devices) {
 		this.devices = devices;
 	}
 	
-	public void addDevice(Heater h){
-		heaters.add(h);
+	public void addDevice(IntelligentDevice dev){
+		this.devices.add(dev);
 	}
 
 	@Override
 	public String toString() {
-		return "Home [id=" + id + ", address=" + address + ", Town=" + Town + ", room=" + rooms + ", surface=" + surface
-				+ ", heaters=" + heaters + ", devices=" + devices + "]";
+		return "Home [id=" + id + ", address=" + adresse + ", Town=" + ville + ", room=" + rooms + ", surface=" + surface
+			 + "]";
+	}
+
+	@XmlTransient
+	@ManyToMany(mappedBy="homes")
+	public List<Person> getOwners() {
+		return owners;
+	}
+
+
+	public void setOwners(List<Person> owners) {
+		this.owners = owners;
+	}
+	
+	public void addOwner(Person own) {
+		this.owners.add(own);
 	}
 	
 	

@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<section *ngIf="person" class = "panel">
+	<form (ngSubmit)="savePersonDetails()" #personForm="ngForm" class="panel-body">
+		<div class="input-group">
+			<span class="input-group-addon">Name</span> 
+			<input type="text" class = "form-control" name="personname" required [(ngModel)]="person.name" #personname="ngModel">
+		</div>
+		<div [hidden]="personname.valid || personname.pristine" class="error">
+    		Name cannot be empty.
+		</div>		
+		<br/>
+		<div class="input-group">
+		  <span class="input-group-addon">Email</span>
+  			<input type="number" class ="form-control" name="creditlimit" required [(ngModel)]="person.email">
+		</div>
+		<br/>
+		<button type="submit" [disabled]="!personForm.form.valid" class = "btn">Save</button>
+	</form>
+</section>
+<section *ngIf="errorMessage" class = "error">{{errorMessage}}</section>

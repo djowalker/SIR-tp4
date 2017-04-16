@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import domain.Person;
+import fr.istic.sir.rest.PersonRestService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -15,10 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "personadd", urlPatterns = { "/PersonAdd" })
 public class PersonAdd extends HttpServlet {
+	
+	private EntityManager em;
+	private PersonRestService qs ;
 
 	public void init() throws ServletException {
 		// EntityManager manager = new EntityManager();
-		EntitySingleton.getInstance();
+		em = EntitySingleton.getManager();
+		qs = new PersonRestService();
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,14 +37,12 @@ public class PersonAdd extends HttpServlet {
 				+ " <LI>ami: " + request.getParameter("ami") + "\n" + "</UL>\n" +
 				"</BODY></HTML>");
 
-		Person added = new Person(request.getParameter("nomPerson"),request.getParameter("prenomPerson"),
-				request.getParameter("mail"));
-
 		EntityTransaction tx = EntitySingleton.getManager().getTransaction();
 		tx.begin();
 		try {
-
-			EntitySingleton.getManager().persist(added);
+			Person added = new Person(request.getParameter("nomPerson"),request.getParameter("prenomPerson"),
+					request.getParameter("mail"));
+			qs.create(added);
 
 		} catch (Exception e) {
 			e.printStackTrace();

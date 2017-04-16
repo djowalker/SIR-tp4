@@ -1,0 +1,72 @@
+<app-navbar></app-navbar>
+<form (ngSubmit)="savePerson()" #personForm="ngForm" class="panel-body">
+	<div class="input-group">
+		<span class="input-group-addon">Name</span> <input type="text"
+			class="form-control" name="personname" required #personname="ngModel"
+			[(ngModel)]="person.name" >
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">Surname</span> <input type="text"
+			class="form-control" name="personsurname" required #personsurname="ngModel"
+			[(ngModel)]="person.surname" >
+	</div>
+	<div
+		[hidden]="personname.valid || personname.pristine || personsurname.valid || personsurname.pristine"
+		class="error">Name and Surname cannot be empty.</div>
+	<br />
+	<div class="input-group">
+		<span class="input-group-addon">Email</span> <input type="text"
+			class="form-control" name="email" required [(ngModel)]="person.email">
+	</div>
+	<br />
+	<div *ngIf="saved" class="input-group">
+	<span class="input-group-addon">Ajout d'amis :</span>
+		<select [(ngModel)]="idSelect" [ngModelOptions]="{standalone: true}">
+			<option *ngFor="let person of people" [value]="person.id">{{person.name}} {{person.surname}}</option>
+		</select>
+		<input type="button" (click)="addFriend()" value="Ajouter ami"/>
+	</div>
+	<div *ngIf="saved" class="input-group">
+		<span class="input-group-addon">Ajout de maison :</span>
+		<select [(ngModel)]="idHomeSelect" [ngModelOptions]="{standalone: true}">
+			<option *ngFor="let h of homes" [value]="h.id">{{h.adresse}} : {{h.ville}}</option>
+		</select>
+		<input type="button" (click)="addHome()" value="Ajouter maison"/>
+	</div>
+
+
+
+
+	<button type="submit" [disabled]="!personForm.form.valid || saved" class="btn">Save</button>
+</form>
+<input type="button" (click)="goToEdit()" value="Validate"/>
+
+<!--
+
+<div *ngIf="saved" class="input-group">
+	<span class="input-group-addon">Ajout de maison:</span>
+	<div>
+		<div class="input-group">
+			<span class="input-group-addon">Adresse</span> <input type="text"
+																  class="form-control" name="addr" required
+																  [(ngModel)]="home.adresse" >
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Ville</span> <input type="text"
+																class="form-control" name="ville" required
+																[(ngModel)]="home.ville" >
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Nombre de piece</span> <input type="number"
+																		  class="form-control" name="piece" required
+																		  [(ngModel)]="home.rooms" >
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">Surface</span> <input type="number"
+																  class="form-control" name="surface" required
+																  [(ngModel)]="home.surface" >
+		</div>
+		<input type="button" (click)="addHome()" value="Ajouter maison"/>
+	</div>
+</div>
+-->

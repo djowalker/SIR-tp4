@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<div *ngIf="person" class="container">
+	<table class="table">
+		<thead>
+		<th>Prénom</th>
+		<th>Nom</th>
+		<th>Email</th>
+		<th>Nombre d'amis</th>
+		<th>Nombre de maison</th>
+		</thead>
+		<tbody>
+		<tr>
+			<td>{{ person.name }}</td>
+			<td>{{ person.surname }}</td>
+			<td>{{ person.email }}</td>
+			<td>{{ person.friends.length }}</td>
+			<td>{{ person.homes.length }}</td>
+		</tr>
+		</tbody>
+	</table>
+			<ul *ngIf="friendsList">
+				<li *ngFor="let friend of friendsList"> <div >{{ friend.name }}</div> </li>
+			</ul>
+			<ul>
+				<li *ngFor="let home of person.homes">{{ home.adresse }} {{home.ville}}</li>
+			</ul>
+		<button type="button" class="btn" (click)="gotoList()">Back</button>
+</div>

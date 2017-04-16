@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+<form #homeForm="ngForm">
+    <div>
+      <div class="input-group">
+        <span class="input-group-addon">Adresse</span> <input type="text"
+                                                              class="form-control" name="addr" required
+                                                              [(ngModel)]="home.adresse" #homeadd="ngModel">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">Ville</span> <input type="text"
+                                                            class="form-control" name="ville" required
+                                                            [(ngModel)]="home.ville" #homeville="ngModel">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">Nombre de piece</span> <input type="number"
+                                                                      class="form-control" name="piece" required
+                                                                      [(ngModel)]="home.rooms" #homepiece="ngModel">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon">Surface</span> <input type="number"
+                                                              class="form-control" name="surface" required
+                                                              [(ngModel)]="home.surface" #homesur="ngModel" >
+      </div>
+      <div
+              [hidden]="homeadd.valid || homeadd.pristine || homeville.valid || homeville.pristine"
+              class="error">Adresse and ville cannot be empty.</div>
+      <br />
+      <div *ngIf="!ajoutDevice">
+        <input type="button" (click)="ajoutDeviceTrue()" value="Ajout device"/>
+      </div>
+
+      <div *ngIf="ajoutDevice">
+        <div>
+          <input type="button" (click)="heater()" value="Chauffage"/>
+          <input type="button" (click)="elec()" value="Device éléctrique"/>
+        </div>
+        <div>
+          <span class="input-group-addon">Consommation</span> <input type="number"
+                                                                class="form-control" name="conso" required
+                                                                [(ngModel)]="device.consommationAvg" >
+          <span class="input-group-addon">Reference</span> <input type="string"
+                                                                     class="form-control" name="ref" required
+                                                                     [(ngModel)]="device.reference"  >
+        </div>
+        <div *ngIf="heaterB">
+          <span class="input-group-addon">Source</span> <input type="string"
+                                                                     class="form-control" name="conso" required
+                                                                     [(ngModel)]="device.source" >
+        </div>
+        <div *ngIf="elecB">
+          <span class="input-group-addon">Nom</span> <input type="string"
+                                                               class="form-control" name="name" required
+                                                               [(ngModel)]="device.name" >
+        </div>
+        <input type="button" (click)="addDevice()" value="Ajout device"/>
+      </div>
+
+
+      <input type="button" (click)="addHome()" [disabled]="!homeForm.form.valid" value="Ajouter maison"/>
+    </div>
+</form>

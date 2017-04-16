@@ -1,0 +1,27 @@
+
+<nav class="navbar navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" (click)="toggleNavbar()">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" routerLink="/">Opower</a>
+    </div>
+    <div id="navbar" *ngIf="!navbarCollapsed" class="navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a routerLink="/people">Liste des utilisateurs et des maisons</a>
+        </li>
+        <li>
+          <a routerLink="/people/add">Ajout d'un utilisateur</a>
+        </li>
+        <li>
+          <a routerLink="/homes/add">Ajout d'une maison</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

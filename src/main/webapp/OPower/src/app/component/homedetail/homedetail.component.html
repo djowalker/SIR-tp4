@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <table class="table">
+    <thead>
+    <th>Adresse</th>
+    <th>Ville</th>
+    <th>Nombre de pièce</th>
+    <th>Surface</th>
+    <th>Nombre de device</th>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{ home.adresse }}</td>
+      <td>{{ home.ville }}</td>
+      <td>{{ home.rooms }}</td>
+      <td>{{ home.surface }}</td>
+      <td>{{ home.devices.length}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" class="btn" (click)="gotoList()">Back</button>
+</div>

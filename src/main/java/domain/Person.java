@@ -1,91 +1,62 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.glassfish.jersey.server.JSONP;
+import org.hibernate.annotations.OptimisticLock;
+import org.hibernate.annotations.Proxy;
+
+
 
 @Entity
 @Table(name="person")
 public class Person {
-	private Long id;
+	
+	private int id;
 	private String name;
 	private String surname;
 	private String mail;
-	private List<Person> friend = new ArrayList<Person>();
-	private List<Home> homes = new ArrayList<Home>();
-	private List<ElectronicDevice> devices = new ArrayList<ElectronicDevice>();
+	private List<Friendship> friends = new ArrayList<Friendship>();
+	private Collection<Home> homes = new ArrayList<Home>();
 	
 	public Person(){
 	}
 	
-	public Person(String name, String surname) {
+	public Person(String name, String surname,String m) {
 		this.name = name;
 		this.surname = surname;
+		this.mail = m;
 	}
 
-	public Person(String name, String surname, String mail, List<Person> friend, List<Home> homes,
-			List<ElectronicDevice> devices) {
-		this.name = name;
-		this.surname = surname;
-		this.mail = mail;
-		this.friend = friend;
-		this.homes = homes;
-		this.devices = devices;
-	}
-
-	
-
-	public Person(String name, String surname, String mail) {
-		super();
-		this.name = name;
-		this.surname = surname;
-		this.mail = mail;
-	}
-
-	@ManyToMany
-	public List<Person> getFriend() {
-		return friend;
-	}
-
-	public void setFriend(List<Person> friend) {
-		this.friend = friend;
-	}
-
-	public void addFriend(Person friend){
-		this.friend.add(friend);
-	}
-	
-	@OneToMany
-	public List<Home> getHomes() {
-		return homes;
-	}
-
-	public void setHomes(List<Home> homes) {
-		this.homes = homes;
-	}
-
-	@OneToMany
-	public List<ElectronicDevice> getDevices() {
-		return devices;
-	}
-
-	public void setDevices(List<ElectronicDevice> devices) {
-		this.devices = devices;
-	}
 	
 	@Id
     @GeneratedValue
-    public Long getId() {
+    @Column(name="PERSON_ID")
+    public int getId() {
         return id;
     }
 
-	public void setId(Long id) {
+	public void setId(int id) {
         this.id = id;
     }
 
@@ -113,7 +84,39 @@ public class Person {
 		this.mail = mail;
 	}
 
+	@OneToMany(cascade = {CascadeType.ALL})
+	public List<Friendship> getFriends() {
+		return friends;
+	}
 
 	
+	public void setFriends(List<Friendship>  friend) {
+		this.friends = friend;
+	}
 	
+	public void addFriend(Person friend){
+		this.friends.add(new Friendship(this.getId(),friend.getId()));
+	}
+	
+	@ManyToMany
+    @JoinTable(name = "PERS_HOME", joinColumns = @JoinColumn(name="PERSON_ID", referencedColumnName="PERSON_ID"),
+            inverseJoinColumns = @JoinColumn(name="HOME_ID", referencedColumnName="HOME_ID"))
+	public Collection<Home> getHomes() {
+		return homes;
+	}
+
+	public void setHomes(Collection<Home> homes) {
+		this.homes = homes;
+	}
+	
+	public void addHome(Home home){
+		this.homes.add(home);
+	}
+	
+	@Override
+    public String toString() {
+        return "Person [ " + this.id+ " : "+ this.name + "  " + this.surname + " , " + this.mail 
+        		+ " , nombre de maison : " + this.homes.size() + " , nombre d'amis :"+this.friends.size()
+        		+" ]";
+    }
 }

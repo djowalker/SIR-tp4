@@ -8,6 +8,7 @@ import java.util.List;
 import domain.ElectronicDevice;
 import domain.Home;
 import domain.Person;
+import fr.istic.sir.rest.PersonRestService;
 import jpa.JpaTest;
 
 import javax.persistence.EntityManager;
@@ -25,14 +26,16 @@ public class PersonList extends HttpServlet {
 
 //	private EntityManagerFactory factory;
 //	private EntityManager manager;
+	private EntityManager em;
+	private PersonRestService qs ;
 
 	@Override
 	public void init() throws ServletException {
 //		System.out.println("init list");
 //		factory = Persistence.createEntityManagerFactory("example");
 //		manager = factory.createEntityManager();
-		EntitySingleton.getInstance();
-
+		em = EntitySingleton.getManager();
+		qs = new PersonRestService();
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,11 +46,11 @@ public class PersonList extends HttpServlet {
 		tx.begin();
 		try {
 			PrintWriter out = response.getWriter();
-			int nomOfPerson = EntitySingleton.getManager().createQuery("Select a From Person a",Person.class).getResultList().size();
-			if(nomOfPerson != 0){
-			List<Person> resultList = EntitySingleton.getManager().createQuery("Select a From Person a", Person.class).getResultList();
+			int numOfPerson = qs.count();
+			if(numOfPerson != 0){
+			List<Person> resultList = qs.findAll();
 			
-			System.out.println("num of person : " + resultList.size());
+			System.out.println("num of person : " + numOfPerson);
 			out.println("<HTML>\n<BODY>\n" + 
 					"<H1>Recapitulatif des personnes dans la base</H1>\n");
 			for (Person pers : resultList) {		
